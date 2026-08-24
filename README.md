@@ -1,75 +1,45 @@
-# Nuxt Minimal Starter
+# Soutenance New
 
-Look at the [Nuxt documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+Plateforme Nuxt permettant aux étudiants de répéter leur soutenance et aux maîtres de mémoire de suivre les simulations.
 
-## Setup
+## Stack
 
-Make sure to install dependencies:
+- Nuxt 4, Vue 3 et Tailwind CSS v4
+- Prisma 7 avec PostgreSQL
+- Nuxt Auth Utils pour les sessions par cookie
+- bcryptjs pour le hachage des mots de passe
+
+## Installation locale
 
 ```bash
-# npm
 npm install
-
-# pnpm
-pnpm install
-
-# yarn
-yarn install
-
-# bun
-bun install
-```
-
-## Development Server
-
-Start the development server on `http://localhost:3000`:
-
-```bash
-# npm
+npx prisma generate
 npm run dev
-
-# pnpm
-pnpm dev
-
-# yarn
-yarn dev
-
-# bun
-bun run dev
 ```
 
-## Production
+Application locale : http://localhost:3000
 
-Build the application for production:
+## Variables d'environnement
 
-```bash
-# npm
-npm run build
+Créer un fichier `.env` local contenant `DATABASE_URL` et `NUXT_SESSION_PASSWORD` (32 caractères minimum). Ne jamais publier ces valeurs.
 
-# pnpm
-pnpm build
+## Base de données
 
-# yarn
-yarn build
+Après avoir configuré `DATABASE_URL`, appliquer les migrations avec `npx prisma migrate dev`.
 
-# bun
-bun run build
-```
+## Fonctionnalités disponibles
 
-Locally preview production build:
+- Inscription, connexion et déconnexion
+- Rôles étudiant et maître de mémoire
+- Simulations de deux minutes en quatre étapes
+- Historique et statistiques étudiant
+- Consultation des simulations par le maître de mémoire
+- Notes et commentaires sur les simulations
 
-```bash
-# npm
-npm run preview
+## À configurer
 
-# pnpm
-pnpm preview
+- Enregistrement webcam et stockage vidéo compatible Vercel
+- Notifications email
+- Variables d'environnement et redéploiement Vercel
 
-# yarn
-yarn preview
-
-# bun
-bun run preview
-```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+Le choix du fournisseur vidéo et email est nécessaire avant d’ajouter leurs clés.

@@ -13,11 +13,45 @@ datasource db {
 }
 
 model User {
-  id        String   @id @default(cuid())
-  email     String   @unique
-  password  String
-  nom       String
-  prenom    String
-  role      String   @default("etudiant")
-  createdAt DateTime @default(now())
+  id          String       @id @default(cuid())
+  email       String       @unique
+  password    String
+  nom         String
+  prenom      String
+  role        String       @default("etudiant")
+  createdAt   DateTime     @default(now())
+  simulations Simulation[]
+  evaluations Evaluation[]
+}
+
+model Simulation {
+  id          String      @id @default(cuid())
+  title       String      @default("Répétition de soutenance")
+  status      String      @default("draft")
+  currentStep Int         @default(1)
+  durationSec Int         @default(120)
+  startedAt   DateTime?
+  completedAt DateTime?
+  videoUrl    String?
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+  userId      String
+  user        User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  evaluation  Evaluation?
+
+  @@index([userId, createdAt])
+}
+
+model Evaluation {
+  id           String     @id @default(cuid())
+  score        Int?
+  comment      String
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+  simulationId String     @unique
+  mentorId     String
+  simulation   Simulation @relation(fields: [simulationId], references: [id], onDelete: Cascade)
+  mentor       User       @relation(fields: [mentorId], references: [id], onDelete: Cascade)
+
+  @@index([mentorId, createdAt])
 }
